@@ -53,7 +53,7 @@ const musicMenu = [
   },
 ];
 
-const playlists = new Array(30).fill(1).map((_, i) => `Playlist ${i + 1}`);
+const playlists = new Array(10).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 const SideBar = () => {
   return (
@@ -109,7 +109,11 @@ const SideBar = () => {
           </List>
         </Box>
         <Divider color="grey.800" />
-        <Box height="66%" overflowY="auto" paddingY="20px">
+        <Box
+          height={["50%", "50%", "50%", "60%"]}
+          overflowY="auto"
+          paddingY="20px"
+        >
           <List spacing={2}>
             {playlists.map((playlist) => (
               <ListItem paddingX="20px" fontSize="16px" key={playlist}>
