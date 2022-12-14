@@ -37,3 +37,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Usefull commands on terminal
 
 npx prisma studio => check localhost:5555 for database view :)
+
+npx prisma migrate reset
