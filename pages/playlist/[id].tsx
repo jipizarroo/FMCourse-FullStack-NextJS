@@ -1,3 +1,4 @@
+import { redirect } from "next/dist/server/api-utils";
 import GradientLayout from "../../components/gradientLayout";
 import SongTable from "../../components/songsTable";
 import { validateToken } from "../../lib/auth";
@@ -35,7 +36,18 @@ const Playlist = ({ playlist }) => {
 };
 
 export const getServerSideProps = async ({ query, req }) => {
-  const { id } = validateToken(req.cookies.TRAX_ACCESS_TOKEN);
+  let user;
+  try {
+    user = validateToken(req.cookies.TRAX_ACCESS_TOKEN);
+  } catch (e) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/signin",
+      },
+    };
+  }
+
   // we use findmany becouse the only unique thing about this is the id of the playlist.
   // we want to make sure that this playlist belongs to the logged user.
   // thats we double check this.
@@ -44,7 +56,7 @@ export const getServerSideProps = async ({ query, req }) => {
   const [playlist] = await prisma.playlist.findMany({
     where: {
       id: +query.id,
-      userId: id,
+      userId: user.id,
     },
     include: {
       songs: {
